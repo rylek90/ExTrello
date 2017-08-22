@@ -1,6 +1,7 @@
 defmodule Trello.Fetcher do
-  def fetch(url, get_method \\ &HTTPoison.get/1) do
-    get_method.(url)
+  def fetch(url, params \\ %{}, get_method \\ &HTTPoison.get/1, url_format \\ &Trello.UrlFormatter.format_for/2) do
+    raw_response = url_format.(url, params)
+    |> get_method.()
     |> handle_response
   end
 

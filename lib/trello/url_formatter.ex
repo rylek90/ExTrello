@@ -5,7 +5,7 @@ defmodule Trello.UrlFormatter do
 
   def format_for(route, params \\ %{}) do
     query_string = get_query_string(params)
-    uri = URI.merge(@base_url, route) |> URI.to_string
+    uri = URI.merge(@base_url, "1/#{route}") |> URI.to_string
     URI.parse("#{uri}?#{query_string}")
   end
 

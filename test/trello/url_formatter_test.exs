@@ -4,7 +4,7 @@ defmodule TrelloUrlFormatterTest do
 
   test "should contain correct path" do
     url = Trello.UrlFormatter.format_for(@path)
-    assert url.path == "/some/path"
+    assert url.path == "/1/some/path"
   end
 
   test "should contain correct base url" do
