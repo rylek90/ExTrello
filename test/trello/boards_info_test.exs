@@ -9,14 +9,14 @@ defmodule TrelloBoardsInfoTest do
   defp error(_, _), do: {:error, "some_error"}
 
   test "should handle response properly" do
-    [board] = Trello.BoardsInfo.get_boards(&success/2)
+    [board] = Trello.BoardsInfo.get_boards(nil, &success/2)
     assert board.last_activity == "dateLastActivity"
     assert board.name == "name"
     assert board.id == "id"
   end
 
   test "should handle error properly" do
-    assert Trello.BoardsInfo.get_boards(&error/2) == "Could not fetch boards info some_error"
+    assert Trello.BoardsInfo.get_boards(nil, &error/2) == "Could not fetch boards info some_error"
   end
 
 end
