@@ -16,6 +16,7 @@ defmodule Trello.BoardsInfo do
 
   defp map(response) when is_list(response), do:
     Enum.map(response, &parse_to_model/1)
+    |> Enum.sort(fn prev, next -> prev.last_activity > next.last_activity end)
 
   defp map(error_reason), do: error_reason
 

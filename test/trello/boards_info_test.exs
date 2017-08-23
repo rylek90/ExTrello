@@ -19,4 +19,23 @@ defmodule TrelloBoardsInfoTest do
     assert Trello.BoardsInfo.get_boards(nil, &error/2) == "Could not fetch boards info some_error"
   end
 
+  test "should be sorted by descending by date" do
+    boards = Trello.BoardsInfo.get_boards(nil, fn _, _ -> {:ok, [%{
+        "dateLastActivity" => "aaaa",
+        "name" => "name",
+        "id" => "id",
+      },
+      %{
+          "dateLastActivity" => "zzzz",
+          "name" => "name",
+          "id" => "id",
+        }
+      ]}
+    end)
+
+    dates = Enum.map(boards, fn board_info -> board_info.last_activity end)
+
+    assert dates == ["zzzz", "aaaa"]
+  end
+
 end
