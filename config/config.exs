@@ -2,11 +2,11 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 config :trello,
-  api_key: "",
-  user_key: "",
-  user_id: "",
-  base_url: "https://api.trello.com/1"
-
+  api_key: "<INSERT_VALUE>",
+  user_key: "<INSERT_VALUE>",
+  user_id: "<INSERT_VALUE>",
+  base_url: "https://api.trello.com",
+  board_id: "<INSERT_VALUE>"
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
