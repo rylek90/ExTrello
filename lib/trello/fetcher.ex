@@ -9,6 +9,6 @@ defmodule Trello.Fetcher do
     {:ok, Poison.Parser.parse!(body)}
 
   defp handle_response({_, %{status_code: _, body: body}}), do:
-    {:error, Poison.Parser.parse!(body)}
+    {:error, body}
 
 end
