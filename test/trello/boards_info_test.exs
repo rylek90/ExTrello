@@ -1,11 +1,18 @@
 defmodule TrelloBoardsInfoTest do
   use ExUnit.Case
 
-  defp success(_, _), do: {:ok, "some_response"}
+  defp success(_, _), do: {:ok, [%{
+      "dateLastActivity" => "dateLastActivity",
+      "name" => "name",
+      "id" => "id",
+    }]}
   defp error(_, _), do: {:error, "some_error"}
 
   test "should handle response properly" do
-    assert Trello.BoardsInfo.get_boards(&success/2) == "some_response"
+    [board] = Trello.BoardsInfo.get_boards(&success/2)
+    assert board.last_activity == "dateLastActivity"
+    assert board.name == "name"
+    assert board.id == "id"
   end
 
   test "should handle error properly" do
