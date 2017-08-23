@@ -12,6 +12,15 @@ defmodule Trello.NamesCache do
     GenServer.call(@name, {:name, id})
   end
 
+  def has_key?(id) do
+    start_if_dead()
+    GenServer.call(@name, {:has_key, id})
+  end
+
+  def handle_call({:has_key, id}, _from, cache) do
+    {:reply, Map.has_key?(cache, id), cache}
+  end
+
   def handle_call({:name, id}, _from, cache) do
     {:reply, Map.get(cache, id), cache}
   end
@@ -22,7 +31,7 @@ defmodule Trello.NamesCache do
   end
 
   defp start_if_dead() do
-    value = case GenServer.whereis(:names_cache) do
+    _ = case GenServer.whereis(:names_cache) do
       nil -> GenServer.start_link(__MODULE__, %{}, [name: @name])
       _ -> nil
     end
