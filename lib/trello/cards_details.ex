@@ -3,7 +3,7 @@ defmodule Trello.CardsDetails do
   defstruct last_activity: nil, id: "", name: "", members: []
   @resource_params %{"fields": "name,idMembers,dateLastActivity"}
 
-  def get_cards(board_id \\ "HzBpCCJU", fetch_method \\ &Trello.Fetcher.fetch/2, names_fetch \\ &Trello.MembersDetails.get_names/1) do
+  def get_cards(board_id, fetch_method \\ &Trello.Fetcher.fetch/2, names_fetch \\ &Trello.MembersDetails.get_names/1) do
     format_path(board_id)
     |> fetch_method.(@resource_params)
     |> handle_response
@@ -17,11 +17,14 @@ defmodule Trello.CardsDetails do
   defp map(error_reason, _), do: error_reason
 
   defp parse_to_model(details, names_fetch) do
+    names = names_fetch.(details["idMembers"])
+            |> Enum.join(", ")
+             
     %Trello.CardsDetails{
       last_activity: details["dateLastActivity"],
       name: details["name"],
       id: details["id"],
-      members: names_fetch.(details["idMembers"])
+      members: names
     }
   end
 

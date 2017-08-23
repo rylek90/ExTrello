@@ -18,11 +18,11 @@ defmodule TrelloCardsDetailsTest do
   end
 
   test "should get details properly" do
-    [card] = get_cards("some_id", &success/2, fn _ -> ["SomeName"] end)
+    [card] = get_cards("some_id", &success/2, fn _ -> ["SomeName", "SomeOtherName"] end)
 
     assert card.id == "id"
     assert card.last_activity == "dateLastActivity"
-    assert card.members == ["SomeName"]
+    assert card.members == "SomeName, SomeOtherName"
     assert card.name == "name"
   end
 

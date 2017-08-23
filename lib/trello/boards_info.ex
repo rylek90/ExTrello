@@ -1,12 +1,11 @@
 defmodule Trello.BoardsInfo do
 
   defstruct last_activity: nil, id: "", name: ""
-  @user_id Trello.ConfigManager.user_id()
   @resource_params %{"fields": "dateLastActivity,id,name"}
 
   import Trello.Fetcher
 
-  def get_boards(user_id \\ @user_id, fetch_method \\ &fetch/2) do
+  def get_boards(user_id, fetch_method \\ &fetch/2) do
     resource_path = format_resource_path(user_id)
 
     fetch_method.(resource_path, @resource_params)
