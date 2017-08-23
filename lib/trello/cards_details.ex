@@ -12,6 +12,7 @@ defmodule Trello.CardsDetails do
 
   defp map(response, names_fetch) when is_list(response), do:
     Enum.map(response, &(parse_to_model(&1, names_fetch)))
+    |> Enum.sort(fn prev, next -> prev.last_activity > next.last_activity end)
 
   defp map(error_reason, _), do: error_reason
 

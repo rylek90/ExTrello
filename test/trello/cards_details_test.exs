@@ -26,4 +26,25 @@ defmodule TrelloCardsDetailsTest do
     assert card.name == "name"
   end
 
+  test "should be sorted by descending by date" do
+    cards = get_cards("some_id", fn _, _ -> {:ok, [%{
+        "dateLastActivity" => "aaaa",
+        "name" => "name",
+        "id" => "id",
+        "idMembers" => ["1", "2"]
+      },
+      %{
+          "dateLastActivity" => "zzzz",
+          "name" => "name",
+          "id" => "id",
+          "idMembers" => ["1", "2"]
+        }
+      ]}
+    end,
+    fn _ -> ["SomeName"] end)
+
+    dates = Enum.map(cards, fn card_info -> card_info.last_activity end)
+
+    assert dates == ["zzzz", "aaaa"]
+  end
 end
