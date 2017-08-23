@@ -21,11 +21,11 @@ defmodule Trello.MembersDetails do
     full_name
   end
 
+  defp handle_name(full_name, _, _, _), do: full_name
+
   defp save_if_available({_, nil}, _), do: :ok
   defp save_if_available({member_id, full_name}, save_to_cache), do:
     save_to_cache.({member_id, full_name})
-
-  defp handle_name(full_name, _, _, _), do: full_name
 
   defp handle_response({:ok, response}), do: response["fullName"]
   defp handle_response({:error, _}), do: nil
